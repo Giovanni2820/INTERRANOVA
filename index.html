@@ -1975,10 +1975,44 @@
             const msg      = document.getElementById('f-msg');
             const btn      = document.getElementById('f-submit');
 
-            if (!nombre || !email || !consulta) {
+            // Limpiar errores previos
+            ['f-nombre','f-email','f-edificio','f-telefono','f-consulta'].forEach(id => {
+                document.getElementById(id).style.borderColor = '';
+            });
+            msg.style.display = 'none';
+
+            // Validar campos obligatorios
+            const fields = [
+                { id: 'f-nombre',   val: nombre,   label: 'Nombre' },
+                { id: 'f-email',    val: email,    label: 'Email' },
+                { id: 'f-edificio', val: edificio, label: 'Edificio / Dirección' },
+                { id: 'f-telefono', val: telefono, label: 'Teléfono' },
+                { id: 'f-consulta', val: consulta, label: 'Consulta' }
+            ];
+            const empty = fields.filter(f => !f.val);
+            if (empty.length) {
+                empty.forEach(f => document.getElementById(f.id).style.borderColor = '#a00');
                 msg.style.display = 'block';
                 msg.style.color = '#a00';
-                msg.textContent = 'Por favor completá nombre, email y consulta.';
+                msg.textContent = 'Por favor completá todos los campos antes de enviar.';
+                return;
+            }
+
+            // Validar formato de email
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('f-email').style.borderColor = '#a00';
+                msg.style.display = 'block';
+                msg.style.color = '#a00';
+                msg.textContent = 'El email no tiene un formato válido.';
+                return;
+            }
+
+            // Validar teléfono numérico
+            if (!/^[0-9+\-\s]+$/.test(telefono)) {
+                document.getElementById('f-telefono').style.borderColor = '#a00';
+                msg.style.display = 'block';
+                msg.style.color = '#a00';
+                msg.textContent = 'El teléfono solo puede contener números.';
                 return;
             }
 
