@@ -1899,21 +1899,26 @@
             <div class="form-title">Solicitar Asesoramiento</div>
             <div class="fgroup">
                 <label class="flabel">Nombre</label>
-                <input type="text" class="finput" placeholder="Su nombre completo">
+                <input id="f-nombre" type="text" class="finput" placeholder="Su nombre completo">
+            </div>
+            <div class="fgroup">
+                <label class="flabel">Email</label>
+                <input id="f-email" type="email" class="finput" placeholder="Su dirección de email">
             </div>
             <div class="fgroup">
                 <label class="flabel">Edificio / Dirección</label>
-                <input type="text" class="finput" placeholder="Dirección del consorcio">
+                <input id="f-edificio" type="text" class="finput" placeholder="Dirección del consorcio">
             </div>
             <div class="fgroup">
                 <label class="flabel">Teléfono</label>
-                <input type="tel" class="finput" placeholder="Su número de contacto">
+                <input id="f-telefono" type="tel" class="finput" placeholder="Su número de contacto">
             </div>
             <div class="fgroup">
                 <label class="flabel">Consulta</label>
-                <textarea class="finput" placeholder="Cuéntenos sobre su consorcio y sus necesidades..."></textarea>
+                <textarea id="f-consulta" class="finput" placeholder="Cuéntenos sobre su consorcio y sus necesidades..."></textarea>
             </div>
-            <button class="fsubmit">Enviar Consulta</button>
+            <button id="f-submit" class="fsubmit">Enviar Consulta</button>
+            <p id="f-msg" style="display:none;margin-top:14px;font-size:13px;letter-spacing:1px;text-transform:uppercase;"></p>
         </div>
     </section>
 
@@ -1959,6 +1964,55 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
 
         document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+        // ── Formulario de contacto
+        document.getElementById('f-submit').addEventListener('click', async () => {
+            const nombre   = document.getElementById('f-nombre').value.trim();
+            const email    = document.getElementById('f-email').value.trim();
+            const edificio = document.getElementById('f-edificio').value.trim();
+            const telefono = document.getElementById('f-telefono').value.trim();
+            const consulta = document.getElementById('f-consulta').value.trim();
+            const msg      = document.getElementById('f-msg');
+            const btn      = document.getElementById('f-submit');
+
+            if (!nombre || !email || !consulta) {
+                msg.style.display = 'block';
+                msg.style.color = '#a00';
+                msg.textContent = 'Por favor completá nombre, email y consulta.';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+            msg.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, email, edificio, telefono, consulta })
+                });
+
+                if (res.ok) {
+                    msg.style.display = 'block';
+                    msg.style.color = 'var(--green)';
+                    msg.textContent = 'Consulta enviada. Nos pondremos en contacto a la brevedad.';
+                    ['f-nombre','f-email','f-edificio','f-telefono','f-consulta'].forEach(id => {
+                        const el = document.getElementById(id);
+                        el.value = '';
+                    });
+                } else {
+                    throw new Error();
+                }
+            } catch {
+                msg.style.display = 'block';
+                msg.style.color = '#a00';
+                msg.textContent = 'Hubo un error al enviar. Intentá nuevamente o escribinos por WhatsApp.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Enviar Consulta';
+            }
+        });
 
         // ── Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a => {
