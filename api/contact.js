@@ -25,9 +25,10 @@ export default async function handler(req, res) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            from: 'info@interranova.com',
-            to:   'info@interranova.com',
-            subject: 'Nueva consulta - Web Interranova',
+            from:     'consultas@interranova.com',
+            to:       'info@interranova.com',
+            reply_to: email,
+            subject:  'Nueva consulta - Web Interranova',
             text: body
         })
     });
