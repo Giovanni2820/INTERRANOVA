@@ -1368,7 +1368,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7DJX3L8F03"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-7DJX3L8F03');
     </script>
@@ -1390,7 +1390,8 @@
         </ul>
         <div style="display:flex;gap:0;">
             <a href="#contacto" class="nav-btn">Solicitar Reunión</a>
-            <a href="https://app.consorcioabierto.com/login" target="_blank" class="nav-btn nav-btn-outline" style="margin-left:0;">Ya soy cliente</a>
+            <a href="https://app.consorcioabierto.com/login" target="_blank" class="nav-btn nav-btn-outline"
+                style="margin-left:0;">Ya soy cliente</a>
         </div>
         <button class="hamburger" aria-label="Menú">
             <span></span><span></span><span></span>
@@ -1455,7 +1456,8 @@
                 <path d="M9 9h6M9 13h4" />
             </svg>
             <span>Matrícula RPA GCABA</span>
-            <span style="color:#fff;font-size:12.5px;font-weight:400;text-transform:none;letter-spacing:normal;">Mat. 20440</span>
+            <span style="color:#fff;font-size:12.5px;font-weight:400;text-transform:none;letter-spacing:normal;">Mat.
+                20440</span>
         </div>
     </div>
 
@@ -1874,7 +1876,7 @@
                     </div>
                     <div>
                         <div class="c-label">Teléfono</div>
-                        <div class="c-val"><a href="tel:1158077741">11 5807 7741</a></div>
+                        <div class="c-val"><a href="tel:1165788778">11 6578 8778</a></div>
                     </div>
                 </div>
                 <div class="c-detail">
@@ -1886,7 +1888,7 @@
                     </div>
                     <div>
                         <div class="c-label">WhatsApp</div>
-                        <div class="c-val"><a href="https://wa.me/541158077741" target="_blank">11 5807 7741</a></div>
+                        <div class="c-val"><a href="https://wa.me/5411565788778" target="_blank">11 5807 7741</a></div>
                     </div>
                 </div>
                 <div class="c-detail">
@@ -1924,10 +1926,12 @@
             </div>
             <div class="fgroup">
                 <label class="flabel">Consulta</label>
-                <textarea id="f-consulta" class="finput" placeholder="Cuéntenos sobre su consorcio y sus necesidades..."></textarea>
+                <textarea id="f-consulta" class="finput"
+                    placeholder="Cuéntenos sobre su consorcio y sus necesidades..."></textarea>
             </div>
             <button id="f-submit" class="fsubmit">Enviar Consulta</button>
-            <p id="f-msg" style="display:none;margin-top:14px;font-size:13px;letter-spacing:1px;text-transform:uppercase;"></p>
+            <p id="f-msg"
+                style="display:none;margin-top:14px;font-size:13px;letter-spacing:1px;text-transform:uppercase;"></p>
         </div>
     </section>
 
@@ -1976,24 +1980,24 @@
 
         // ── Formulario de contacto
         document.getElementById('f-submit').addEventListener('click', async () => {
-            const nombre   = document.getElementById('f-nombre').value.trim();
-            const email    = document.getElementById('f-email').value.trim();
+            const nombre = document.getElementById('f-nombre').value.trim();
+            const email = document.getElementById('f-email').value.trim();
             const edificio = document.getElementById('f-edificio').value.trim();
             const telefono = document.getElementById('f-telefono').value.trim();
             const consulta = document.getElementById('f-consulta').value.trim();
-            const msg      = document.getElementById('f-msg');
-            const btn      = document.getElementById('f-submit');
+            const msg = document.getElementById('f-msg');
+            const btn = document.getElementById('f-submit');
 
             // Limpiar errores previos
-            ['f-nombre','f-email','f-edificio','f-telefono','f-consulta'].forEach(id => {
+            ['f-nombre', 'f-email', 'f-edificio', 'f-telefono', 'f-consulta'].forEach(id => {
                 document.getElementById(id).style.borderColor = '';
             });
             msg.style.display = 'none';
 
             // Validar campos obligatorios
             const fields = [
-                { id: 'f-nombre',   val: nombre,   label: 'Nombre' },
-                { id: 'f-email',    val: email,    label: 'Email' },
+                { id: 'f-nombre', val: nombre, label: 'Nombre' },
+                { id: 'f-email', val: email, label: 'Email' },
                 { id: 'f-edificio', val: edificio, label: 'Edificio / Dirección' },
                 { id: 'f-telefono', val: telefono, label: 'Teléfono' },
                 { id: 'f-consulta', val: consulta, label: 'Consulta' }
@@ -2040,7 +2044,7 @@
                     msg.style.display = 'block';
                     msg.style.color = 'var(--green)';
                     msg.textContent = 'Consulta enviada. Nos pondremos en contacto a la brevedad.';
-                    ['f-nombre','f-email','f-edificio','f-telefono','f-consulta'].forEach(id => {
+                    ['f-nombre', 'f-email', 'f-edificio', 'f-telefono', 'f-consulta'].forEach(id => {
                         const el = document.getElementById(id);
                         el.value = '';
                     });
